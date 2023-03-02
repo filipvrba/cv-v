@@ -1,0 +1,27 @@
+import 'DataElement', './data_element.js'
+
+export default class ElmProjects < DataElement
+  def initialize
+    super
+
+    init_elm()
+  end
+
+  def connectedCallback()
+
+  end
+
+  def disconnectedCallback()
+
+  end
+
+  def init_elm()
+    console.log @data
+
+    template = """
+        
+    """
+
+    self.innerHTML = template
+  end
+end

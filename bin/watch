@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rjsv -c -w -s src/public/app/src/rjs -o src/public/app/src/js

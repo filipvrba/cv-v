@@ -1,0 +1,13 @@
+export default class Data
+  def self.get_decode_obj(data)
+    result = nil
+
+    unless data == "" or data == "null"
+      decode_data = base32.decode(data)
+      obj = JSON.parse(decode_data)
+      result = obj
+    end
+
+    return result
+  end
+end

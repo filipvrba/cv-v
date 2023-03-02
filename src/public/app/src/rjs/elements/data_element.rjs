@@ -1,0 +1,13 @@
+import 'Data', '../core/data.js'
+
+export default class DataElement < HTMLElement
+  def initialize
+    super
+    @data = get_data()
+  end
+
+  def get_data()
+    attr_data = self.getAttribute('data')
+    return Data.get_decode_obj(attr_data)
+  end
+end

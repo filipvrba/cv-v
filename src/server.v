@@ -1,0 +1,46 @@
+module src
+
+import vweb
+import sqlite
+// import os
+// import time
+
+const (
+	port = 8080
+	static_dir = 'src/public'
+    // token = os.environ()[""]
+)
+
+struct App {
+    vweb.Context
+
+pub mut:
+	logged_in bool
+	db sqlite.DB
+}
+
+struct Health {
+	status_code int
+	status string
+}
+
+pub fn server_new()
+{
+	vweb.run_at(new_app(), vweb.RunParams{
+        port: port
+    }) or { panic(err) }
+}
+
+fn new_app() &App {
+    mut app := &App{
+		db: sqlite.connect('cv.sqlite') or { panic(err) }
+	}
+
+	app.handle_static(static_dir, true)
+    return app
+}
+
+pub fn (mut app App) health() vweb.Result {
+	context := Health{ 200, "ok" }
+	return app.json(context)
+}

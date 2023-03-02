@@ -1,0 +1,5 @@
+import "ElmProjects", "./elements/elm_projects.js"
+import "ElmProject", "./elements/elm_project.js"
+
+window.customElements.define( 'elm-projects', ElmProjects )
+window.customElements.define( 'elm-project', ElmProject )

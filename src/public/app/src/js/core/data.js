@@ -10,5 +10,21 @@ export default class Data {
     };
 
     return result
+  };
+
+  static get_binary_to_image(str_hex, type="png") {
+    let head = `data:image/${type};base64`;
+    return `${Data.hex_to_base64(str_hex)}`
+  };
+
+  static hex_to_base64(str_hex) {
+    return btoa(String.fromCharCode.apply(
+      null,
+
+      str_hex.replace(/\r|\n/, "").replace(/([\da-fA-F]{2}) ?/, "0x$1 ").replace(
+        / +$/m,
+        ""
+      ).split(" ")
+    ))
   }
 }

@@ -1,10 +1,8 @@
 module src
 
-import time
-
 struct Profile {
-	id		   int [primary; sql: serial]
-	created_at time.Time
+	id		   int
+	created_at int
 mut:
 	full_name string
 	avatar	  string

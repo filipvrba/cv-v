@@ -14,7 +14,7 @@ function gsub(...args) {
 String.prototype.gsub = gsub;
 
 function url_form() {
-  return this.gsub(" ", "-").toLowerCase()
+  return this.gsub(" ", "-").toLowerCase().replace("---", "-")
 };
 
 String.prototype.url_form = url_form

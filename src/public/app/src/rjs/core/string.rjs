@@ -15,6 +15,6 @@ end
 String.prototype.gsub = gsub
 
 def url_form()
-  return self.gsub(' ', '-').toLowerCase()
+  return self.gsub(' ', '-').toLowerCase().replace('---', '-')
 end
 String.prototype.url_form = url_form

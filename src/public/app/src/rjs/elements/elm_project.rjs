@@ -4,6 +4,12 @@ export default class ElmProjects < DataElement
   def initialize
     super
 
+    @data = @data[0]
+    @md = window.markdownit(
+      breaks: true,
+      html: true
+    )
+
     init_elm()
   end
 
@@ -16,10 +22,28 @@ export default class ElmProjects < DataElement
   end
 
   def init_elm()
-    console.log @data
-
     template = """
-        
+    <article class='blog-post'>
+      <h1 class='pb-4 mb-4'>#{@data[:name]}</h1>
+      <div class='pb-4 mb-4'>
+        #{ @md.render( @data[:content] ) }
+      </div>
+
+      <ul class='list-inline'>
+        <li class='list-inline-item'>
+          <p class='fa fa-user-o'></p>
+          #{@data[:author]}
+        </li>
+        <li class='list-inline-item'>
+          <p class='fa fa-folder-o'></p>
+          #{@data[:category]}
+        </li>
+        <li class='list-inline-item'>
+          <p class='fa fa-calendar-o'></p>
+          #{@data[:create_at].to_date()}
+        </li>
+      </ul>
+    </article>
     """
 
     self.innerHTML = template

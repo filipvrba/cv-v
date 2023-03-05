@@ -9,6 +9,7 @@ const (
 	port = 8080
 	static_dir = 'src/public'
     // token = os.environ()[""]
+	web_year = 2023
 )
 
 struct App {
@@ -17,6 +18,7 @@ struct App {
 pub mut:
 	logged_in bool
 	db sqlite.DB
+	year int = web_year
 }
 
 struct Health {
@@ -37,6 +39,7 @@ fn new_app() &App {
 	}
 
 	app.handle_static(static_dir, true)
+
     return app
 }
 

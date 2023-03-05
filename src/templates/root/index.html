@@ -4,11 +4,13 @@
         @include '../layout/head.html'
     </head>
     <body>
-        <div class="container py-3">
+        <div id="app" class="container py-3">
             @include '../layout/header.html'
-
-            <div id="app">
-            </div>
+            <main class="container py-3">
+                <div id="app" class="container py-5">
+                </div>
+            </main>
+            @include '../layout/footer.html'
         </div>
 
         @include '../layout/b_scripts.html'

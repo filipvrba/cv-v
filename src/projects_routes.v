@@ -19,6 +19,7 @@ pub fn(mut app App) projects_project(name string) vweb.Result
 		mut proj := []Project{}
 		proj << Project{
 			id: -1
+			content: err.str()
 		}
 		proj
 	}

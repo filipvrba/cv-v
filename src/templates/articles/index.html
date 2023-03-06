@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @include '../layout/head.html'
+    </head>
+    <body>
+        <div id="app" class="container py-3">
+            @include '../layout/header.html'
+            <main>
+                <div id="app" class="container py-5">
+                    <elm-articles data="@data"></elm-articles>
+                </div>
+            </main>
+            @include '../layout/footer.html'
+        </div>
+
+        @include '../layout/b_scripts.html'
+    </body>
+</html>

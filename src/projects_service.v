@@ -3,7 +3,6 @@ module src
 import json
 import encoding.base32
 import markdown
-import src.mruby
 import regex
 
 const (
@@ -20,7 +19,7 @@ pub fn (mut app App) get_projects() []Project
 	for _, row in rows {
 		data := row.vals
 
-		mut content := mruby.unescape(data[4])
+		mut content := data[4]
 		mut reg, _, _ := regex.regex_base("^.*\n")
 		a_reg_result := reg.find_all_str( content )
 
@@ -58,7 +57,7 @@ pub fn (mut app App) get_project(name string) ![]Project
 				author: data[1]
 				name: data[2]
 				category: data[3]
-				content: markdown.to_html( mruby.unescape(data[4]) )
+				content: markdown.to_html( data[4] )
 				create_at: data[5].int()
 				last_change: data[6].int()
 			}

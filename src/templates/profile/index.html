@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @include '../layout/head.html'
+    </head>
+    <body>
+        <div id="app" class="container py-3">
+            @include '../layout/header.html'
+            <main>
+                <div id="app" class="container py-5">
+                    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+                        <h1 class="display-4 fw-normal">@title</h1>
+                    </div>
+
+                    <elm-profile data="@data"></elm-profile>
+                </div>
+            </main>
+            @include '../layout/footer.html'
+        </div>
+
+        @include '../layout/b_scripts.html'
+    </body>
+</html>

@@ -6,9 +6,6 @@ export default class ElmProjects extends DataElement {
     this.init_elm()
   };
 
-  connectedCallback() {};
-  disconnectedCallback() {};
-
   init_elm() {
     let l_acc_item = () => {
       let result = "";

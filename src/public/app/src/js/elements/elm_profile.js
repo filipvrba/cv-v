@@ -7,9 +7,6 @@ export default class ElmProfile extends DataElement {
     this.init_elm()
   };
 
-  connectedCallback() {};
-  disconnectedCallback() {};
-
   init_elm() {
     let template = `${`
       <div class='d-flex flex-column flex-md-row align-items-center pb-3 mb-4 pt-3 mt-4'>

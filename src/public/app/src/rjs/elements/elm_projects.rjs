@@ -7,14 +7,6 @@ export default class ElmProjects < DataElement
     init_elm()
   end
 
-  def connectedCallback()
-
-  end
-
-  def disconnectedCallback()
-
-  end
-
   def init_elm()
     l_acc_item = lambda do
       result = ""

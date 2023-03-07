@@ -8,9 +8,6 @@ export default class ElmProjects extends DataElement {
     this.init_elm()
   };
 
-  connectedCallback() {};
-  disconnectedCallback() {};
-
   init_elm() {
     let template = `${`
     <div class='pricing-header p-3 pb-md-4 mx-auto text-center'>

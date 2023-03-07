@@ -45,6 +45,56 @@ pub fn(mut app App) api_post_sandbox() vweb.Result
 	return app.json(message)
 }
 
+// Article
+[post; '/api/v1/post/article/add']
+pub fn(mut app App) post_article_add() vweb.Result
+{
+	api_article := json.decode(ApiArticle, app.Context.req.data) or {
+		ApiArticle{}
+	}
+	code_result := app.add_article(api_article)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+[post; '/api/v1/post/article/free']
+pub fn(mut app App) post_article_free() vweb.Result
+{
+	api_article := json.decode(ApiArticle, app.Context.req.data) or {
+		ApiArticle{}
+	}
+	code_result := app.free_article(api_article)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+[post; '/api/v1/post/article/update']
+pub fn(mut app App) post_article_update() vweb.Result
+{
+	api_article := json.decode(ApiArticle, app.Context.req.data) or {
+		ApiArticle{}
+	}
+	code_result := app.update_article(api_article)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+// Project
 [post; '/api/v1/post/project/add']
 pub fn(mut app App) post_project_add() vweb.Result
 {

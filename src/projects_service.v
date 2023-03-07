@@ -4,19 +4,17 @@ import json
 import encoding.base32
 import markdown
 import regex
+import time
 
 const (
 	query_all_projects = "SELECT projects.id, full_name as author, name, category, content, projects.created_at, last_change FROM projects INNER JOIN profiles ON projects.author_id = profiles.id"
 	query_where_project = "WHERE REPLACE(LOWER(name), ' - ', ' ') = '[*]'"
 	query_sort_projects = "ORDER BY last_change DESC LIMIT 3"
 	query_update_project = "UPDATE projects SET [0] WHERE id = [1]"
+	query_add_project = "INSERT INTO projects (author_id, name, category, content, created_at, last_change) " +
+		"VALUES ([0], '[1]', '[2]', '[3]', [4], [4])"
+	query_free_project = "DELETE FROM projects WHERE id = [0]"
 )
-
-pub fn (mut app App) update_project(id int, query_set string) int
-{
-	query := "${ query_update_project.replace('[0]', query_set).replace('[1]', id.str()) };"
-	return app.db.exec_none(query)
-}
 
 pub fn (mut app App) get_projects() []Project
 {
@@ -112,6 +110,36 @@ pub fn (mut app App) get_project(name string) ![]Project
 	else {
 		return error("Name $name not found.")
 	}
+}
+
+pub fn (mut app App) set_project(api_project ApiProject) int
+{
+	query := query_add_project
+		.replace('[0]', api_project.author_id.str())
+		.replace('[1]', api_project.name)
+		.replace('[2]', api_project.category)
+		.replace('[3]', api_project.content)
+		.replace('[4]', time.now().unix.str()) + ";"
+	result_code := app.db.exec_none(query)
+	return result_code
+}
+
+pub fn (mut app App) free_project(api_project ApiProject) int
+{
+	query := query_free_project
+		.replace('[0]', api_project.id.str()) + ";"
+	result_code := app.db.exec_none(query)
+	return result_code
+}
+
+pub fn (mut app App) update_project(api_project ApiProject) int
+{
+	query := query_update_project
+		.replace('[0]', "$api_project.query, last_change=${time.now().unix}")
+		.replace('[1]', api_project.id.str()) + ";"
+
+	result_code := app.db.exec_none(query)
+	return result_code
 }
 
 pub fn (mut app App) get_encode_json_projects(projects []Project) string

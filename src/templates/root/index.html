@@ -6,8 +6,13 @@
     <body>
         <div id="app" class="container py-3">
             @include '../layout/header.html'
-            <main class="container py-3">
+            <main>
                 <div id="app" class="container py-5">
+                    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+                        <h1 class="display-4 fw-normal">@title</h1>
+                    </div>
+
+                    <elm-top-projects data="@tps_data"></elm-top-projects>
                 </div>
             </main>
             @include '../layout/footer.html'

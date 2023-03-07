@@ -46,7 +46,6 @@ export default class ElmProfile extends DataElement {
       </div>
 
     `}`;
-    console.log(this._data);
     this.innerHTML = template
   }
 }

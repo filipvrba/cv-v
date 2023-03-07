@@ -59,9 +59,9 @@ export default class ElmProjects < DataElement
     end
 
     template = """
-<div class='accordion' id='accordionProjects'>
-  #{l_acc_item.call()}
-</div>
+    <div class='accordion mx-auto col-lg-9' id='accordionProjects'>
+      #{l_acc_item.call()}
+    </div>
     """
 
     self.innerHTML = template

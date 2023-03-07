@@ -76,7 +76,7 @@ export default class ElmArticles extends DataElement {
     };
 
     let template = `${`
-      <div class='accordion' id='accordionArticles'>
+      <div class='accordion mx-auto col-lg-9' id='accordionArticles'>
         ${l_acc_item.call()}
       </div>
     `}`;

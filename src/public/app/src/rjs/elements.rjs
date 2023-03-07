@@ -2,10 +2,10 @@ import "ElmProjects", "./elements/elm_projects.js"
 import "ElmProject", "./elements/elm_project.js"
 import "ElmArticles", "./elements/elm_articles.js"
 import "ElmProfile", "./elements/elm_profile.js"
-import "ElmTopProjects", "./elements/elm_top_projects.js"
+import "ElmGreet", "./elements/elm_greet.js"
 
 window.customElements.define( 'elm-projects', ElmProjects )
 window.customElements.define( 'elm-project', ElmProject )
 window.customElements.define( 'elm-articles', ElmArticles )
 window.customElements.define( 'elm-profile', ElmProfile )
-window.customElements.define( 'elm-top-projects', ElmTopProjects )
+window.customElements.define( 'elm-greet', ElmGreet )

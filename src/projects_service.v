@@ -72,7 +72,7 @@ pub fn (mut app App) get_top_projects() []Project
 				author: data[1]
 				name: data[2]
 				category: data[3]
-				content: content
+				content: markdown.to_html( content )
 				create_at: data[5].int()
 				last_change: data[6].int()
 			}

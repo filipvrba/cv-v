@@ -23,26 +23,11 @@ pub fn(mut app App) api_get_projects() vweb.Result
 	return app.json(projects)
 }
 
-[get; '/api/v1/get/profile']
-pub fn(mut app App) api_get_profile() vweb.Result
+[get; '/api/v1/get/profiles']
+pub fn(mut app App) api_get_profiles() vweb.Result
 {
-	profile := app.get_api_profile()
+	profile := app.get_api_profiles()
 	return app.json(profile)
-}
-
-[post; '/api/v1/post/sandbox']
-pub fn(mut app App) api_post_sandbox() vweb.Result
-{
-	println(app.Context.req.data)
-
-	message := Message{
-		status_code: StatusCode{
-			code: 200
-			status: "OK"
-		}
-		message: "The Sandbox function took the request and processed it."
-	}
-	return app.json(message)
 }
 
 // Article
@@ -134,6 +119,55 @@ pub fn(mut app App) post_project_update() vweb.Result
 		ApiProject{}
 	}
 	code_result := app.update_project(api_project)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+// Profile
+[post; '/api/v1/post/profile/add']
+pub fn(mut app App) post_profile_add() vweb.Result
+{
+	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
+		ApiProfileTwo{}
+	}
+	code_result := app.add_profile(api_profile)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+[post; '/api/v1/post/profile/free']
+pub fn(mut app App) post_profile_free() vweb.Result
+{
+	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
+		ApiProfileTwo{}
+	}
+	code_result := app.free_profile(api_profile)
+
+	message := Message{
+		status_code: StatusCode{
+			code: code_result
+		}
+	}
+	return app.json(message)
+}
+
+[post; '/api/v1/post/profile/update']
+pub fn(mut app App) post_profile_update() vweb.Result
+{
+	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
+		ApiProfileTwo{}
+	}
+	code_result := app.update_profile(api_profile)
 
 	message := Message{
 		status_code: StatusCode{

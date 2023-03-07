@@ -16,3 +16,13 @@ mut:
 	bio		  string
 	count	  PCount
 }
+
+struct ApiProfileTwo {
+	id 		  int
+	full_name string
+	avatar	  string
+	email     string
+	phone	  string
+	bio		  string
+	query	  string
+}

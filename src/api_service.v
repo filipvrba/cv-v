@@ -31,12 +31,12 @@ pub fn (mut a App) get_api_projects() ApiProjects {
 	}
 }
 
-pub fn (mut a App) get_api_profile() ApiProfile {
+pub fn (mut a App) get_api_profiles() ApiProfile {
 	return ApiProfile {
 		status_code: StatusCode {
 			code: 200
 			status: "OK"
 		}
-		profile: a.get_profile(1)
+		profile: a.get_profiles()
 	}
 }

@@ -29,7 +29,7 @@ export default class ElmProjects extends DataElement {
       <div class='row g-0'>
         <div class='container'>
           <div class='card-body'>
-            <p class='card-text'>${project.content}</p>
+            <div class='md-html card-text'>${project.content}</div>
             <div class='row g-0'>
               <div class='col-6' style='margin-top: auto; margin-bottom: auto;'>
                 <p class='card-text'><small class='text-muted'>${project.category} | Last updated ${project.last_change.to_date()}</small></p>

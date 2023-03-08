@@ -13,6 +13,17 @@ const(
 	query_free_profile = "DELETE FROM profiles WHERE id = [0]"
 	query_update_profile = "UPDATE profiles SET [0] WHERE id = [1]"
 	query_where_author = "WHERE is_author = 1"
+	query_create_profiles = "CREATE TABLE profiles (" +
+		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		"full_name TEXT, " +
+		"avatar TEXT, " +
+		"email TEXT, " +
+		"phone TEXT, " +
+		"bio TEXT, " +
+		"created_at INTEGER, " +
+		"is_author INTEGER" +
+	");"
+	query_free_profiles = "DROP TABLE profiles"
 )
 
 pub fn (mut app App) get_pcount(author_id int) PCount
@@ -137,6 +148,20 @@ pub fn (mut app App) update_profile(api_profile ApiProfileTwo) int
 		.replace('[1]', api_profile.id.str()) + ";"
 
 	result_code := app.db.exec_none(query)
+	return result_code
+}
+
+pub fn (mut app App) create_profiles() int
+{
+	query := query_create_profiles
+	result_code := app.db.exec_none("$query")
+	return result_code
+}
+
+pub fn (mut app App) free_profiles() int
+{
+	query := query_free_profiles
+	result_code := app.db.exec_none("$query")
 	return result_code
 }
 

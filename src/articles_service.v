@@ -14,6 +14,16 @@ const (
 		"VALUES ([0], [1], '[2]', '[3]', '[4]', [5])"
 	query_free_article = "DELETE FROM articles WHERE id = [0]"
 	query_update_article = "UPDATE articles SET [0] WHERE id = [1]"
+	query_create_articles = "CREATE TABLE articles (" +
+		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		"author_id INTEGER, " +
+		"project_id INTEGER, " +
+		"name TEXT(100) UNIQUE NOT NULL, " +
+		"description TEXT, " +
+		"url TEXT, " +
+		"created_at INTEGER" +
+	");"
+	query_free_articles = "DROP TABLE articles"
 )
 
 pub fn (mut app App) get_articles(author_id int) []Article
@@ -110,6 +120,20 @@ pub fn (mut app App) update_article(api_article ApiArticle) int
 		.replace('[1]', api_article.id.str()) + ";"
 
 	result_code := app.db.exec_none(query)
+	return result_code
+}
+
+pub fn (mut app App) create_articles() int
+{
+	query := query_create_articles
+	result_code := app.db.exec_none("$query")
+	return result_code
+}
+
+pub fn (mut app App) free_articles() int
+{
+	query := query_free_articles
+	result_code := app.db.exec_none("$query")
 	return result_code
 }
 

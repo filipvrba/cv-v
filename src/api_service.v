@@ -40,3 +40,19 @@ pub fn (mut a App) get_api_profiles() ApiProfile {
 		profile: a.get_profiles(false)
 	}
 }
+
+pub fn (mut a App) api_reset_tables() Message {
+	mut code := a.free_articles()
+	code = a.free_projects()
+	code = a.free_profiles()
+	
+	code = a.create_articles()
+	code = a.create_projects()
+	code = a.create_profiles()
+
+	return Message {
+		status_code: StatusCode {
+			code: code
+		}
+	}
+}

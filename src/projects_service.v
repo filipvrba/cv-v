@@ -15,6 +15,16 @@ const (
 	query_add_project = "INSERT INTO projects (author_id, name, category, content, created_at, last_change) " +
 		"VALUES ([0], '[1]', '[2]', '[3]', [4], [4])"
 	query_free_project = "DELETE FROM projects WHERE id = [0]"
+	query_create_projects = "CREATE TABLE projects (" +
+		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		"author_id INTEGER, " +
+		"name TEXT(60) UNIQUE NOT NULL, " +
+		"category TEXT, " +
+		"content TEXT, " +
+		"created_at INTEGER, " +
+		"last_change INTEGER" +
+	");"
+	query_free_projects = "DROP TABLE projects"
 )
 
 pub fn (mut app App) get_projects(author_id int) []Project
@@ -144,6 +154,20 @@ pub fn (mut app App) update_project(api_project ApiProject) int
 		.replace('[1]', api_project.id.str()) + ";"
 
 	result_code := app.db.exec_none(query)
+	return result_code
+}
+
+pub fn (mut app App) create_projects() int
+{
+	query := query_create_projects
+	result_code := app.db.exec_none("$query")
+	return result_code
+}
+
+pub fn (mut app App) free_projects() int
+{
+	query := query_free_projects
+	result_code := app.db.exec_none("$query")
 	return result_code
 }
 

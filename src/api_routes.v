@@ -176,3 +176,11 @@ pub fn(mut app App) post_profile_update() vweb.Result
 	}
 	return app.json(message)
 }
+
+// Tables
+[post; '/api/v1/post/tables/reset']
+pub fn(mut app App) post_tables_reset() vweb.Result
+{
+	message := app.api_reset_tables()
+	return app.json(message)
+}

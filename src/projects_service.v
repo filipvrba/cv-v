@@ -5,6 +5,7 @@ import encoding.base32
 import markdown
 import regex
 import time
+import net.urllib
 
 const (
 	query_all_projects = "SELECT projects.id, full_name as author, name, category, content, projects.created_at, last_change FROM projects INNER JOIN profiles ON projects.author_id = profiles.id"
@@ -40,7 +41,7 @@ pub fn (mut app App) get_projects(author_id int) []Project
 	for _, row in rows {
 		data := row.vals
 
-		mut content := data[4]
+		mut content := urllib.query_unescape(data[4]) or {""}
 		mut reg, _, _ := regex.regex_base("^.*\n")
 		a_reg_result := reg.find_all_str( content )
 
@@ -72,7 +73,7 @@ pub fn (mut app App) get_top_projects(author_id int) []Project
 		for _, row in rows {
 			data := row.vals
 
-			mut content := data[4]
+			mut content := urllib.query_unescape(data[4]) or {""}
 			mut reg, _, _ := regex.regex_base("^.*\n")
 			a_reg_result := reg.find_all_str( content )
 
@@ -115,7 +116,7 @@ pub fn (mut app App) get_project(name string) ![]Project
 				author: data[1]
 				name: data[2]
 				category: data[3]
-				content: markdown.to_html( data[4] )
+				content: markdown.to_html( urllib.query_unescape(data[4]) or {""} )
 				create_at: data[5].int()
 				last_change: data[6].int()
 			}

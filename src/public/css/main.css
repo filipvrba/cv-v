@@ -1,5 +1,21 @@
+body {
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+}
+
 .md-html img {
     width: 100%;
     height: auto;
     margin-bottom: 1em;
+}
+
+.md-html blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+.md-html a {
+	text-decoration: none;
 }

@@ -6,7 +6,8 @@ import vweb
 pub fn(mut app App) profile_index() vweb.Result
 {
 	title := "Profile"
-	profiles := app.get_profile(1)
+	author_id := app.get_profiles(true)[0].id
+	profiles := app.get_profile(author_id)
 	data := app.get_encode_json_profiles(profiles)
 
 	return $vweb.html()

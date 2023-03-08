@@ -9,6 +9,7 @@ import time
 const (
 	query_all_projects = "SELECT projects.id, full_name as author, name, category, content, projects.created_at, last_change FROM projects INNER JOIN profiles ON projects.author_id = profiles.id"
 	query_where_project = "WHERE REPLACE(LOWER(name), ' - ', ' ') = '[*]'"
+	query_where_author_project = "WHERE projects.author_id = [0]"
 	query_sort_projects = "ORDER BY last_change DESC LIMIT 3"
 	query_update_project = "UPDATE projects SET [0] WHERE id = [1]"
 	query_add_project = "INSERT INTO projects (author_id, name, category, content, created_at, last_change) " +
@@ -16,11 +17,15 @@ const (
 	query_free_project = "DELETE FROM projects WHERE id = [0]"
 )
 
-pub fn (mut app App) get_projects() []Project
+pub fn (mut app App) get_projects(author_id int) []Project
 {
+	mut query := query_all_projects
+	if author_id > -1 {
+		query += " ${query_where_author_project.replace('[0]', author_id.str())}"
+	}
+
 	mut projects := []Project{}
-	rows, _ := app.db.exec("$query_all_projects;")
-	
+	rows, _ := app.db.exec("$query;")
 
 	for _, row in rows {
 		data := row.vals
@@ -47,9 +52,9 @@ pub fn (mut app App) get_projects() []Project
 	return projects
 }
 
-pub fn (mut app App) get_top_projects() []Project
+pub fn (mut app App) get_top_projects(author_id int) []Project
 {
-	query := "$query_all_projects $query_sort_projects;"
+	query := "$query_all_projects ${query_where_author_project.replace('[0]', author_id.str())} $query_sort_projects;"
 	rows, _ := app.db.exec(query)
 	mut projects := []Project{}
 

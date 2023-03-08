@@ -10,6 +10,14 @@ export default class ElmProjects extends DataElement {
     let l_acc_item = () => {
       let result = "";
 
+      if (this._data.length == 0) {
+        result = `${`
+        <div class='text-center'>
+          <p class='h4 text-muted'>no projects found</p>
+        </div>
+        `}`
+      };
+
       for (let i = 0; i < this._data.length; i++) {
         let project = this._data[i];
         let template = `${`

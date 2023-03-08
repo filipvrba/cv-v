@@ -17,7 +17,7 @@ pub fn (mut a App) get_api_articles() ApiArticles {
 			code: 200
 			status: "OK"
 		}
-		articles: a.get_articles()
+		articles: a.get_articles(-1)
 	}
 }
 
@@ -27,7 +27,7 @@ pub fn (mut a App) get_api_projects() ApiProjects {
 			code: 200
 			status: "OK"
 		}
-		projects: a.get_projects()
+		projects: a.get_projects(-1)
 	}
 }
 
@@ -37,6 +37,6 @@ pub fn (mut a App) get_api_profiles() ApiProfile {
 			code: 200
 			status: "OK"
 		}
-		profile: a.get_profiles()
+		profile: a.get_profiles(false)
 	}
 }

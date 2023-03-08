@@ -9,6 +9,7 @@ struct Profile {
 	id		   int
 	created_at int
 mut:
+	is_author int
 	full_name string
 	avatar	  string
 	email     string
@@ -19,6 +20,7 @@ mut:
 
 struct ApiProfileTwo {
 	id 		  int
+	is_author int
 	full_name string
 	avatar	  string
 	email     string

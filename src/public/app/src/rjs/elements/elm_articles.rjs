@@ -22,6 +22,15 @@ export default class ElmArticles < DataElement
     l_acc_item = lambda do
       result = ""
 
+      if @data.length == 0 or @data[0].id == -1
+        result = """
+        <div class='text-center'>
+          <p class='h4 text-muted'>no articles found</p>
+        </div>
+        """
+        return result
+      end
+
       (0...@data.length).step(1) do |i| article = @data[i]
         article_id = "#{i}-#{article[:name].url_form()}"
 

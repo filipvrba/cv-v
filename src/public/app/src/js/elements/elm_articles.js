@@ -22,6 +22,15 @@ export default class ElmArticles extends DataElement {
     let l_acc_item = () => {
       let result = "";
 
+      if (this._data.length == 0 || this._data[0].id == -1) {
+        result = `${`
+        <div class='text-center'>
+          <p class='h4 text-muted'>no articles found</p>
+        </div>
+        `}`;
+        return result
+      };
+
       for (let i = 0; i < this._data.length; i++) {
         let article = this._data[i];
         let article_id = `${i}-${article.name.url_form()}`;

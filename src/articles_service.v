@@ -8,6 +8,7 @@ const (
 	query_all_articles = "SELECT articles.id, profiles.full_name, projects.name, articles.name, description, url, articles.created_at FROM articles " +
 							"INNER JOIN profiles ON articles.author_id = profiles.id " +
 							"INNER JOIN projects ON articles.project_id = projects.id"
+	query_where_articles = "WHERE articles.author_id = [0]"
 	query_sort_articles = "ORDER BY articles.created_at DESC LIMIT 3"
 	query_add_article = "INSERT INTO articles (author_id, project_id, name, description, url, created_at) " +
 		"VALUES ([0], [1], '[2]', '[3]', '[4]', [5])"
@@ -15,10 +16,14 @@ const (
 	query_update_article = "UPDATE articles SET [0] WHERE id = [1]"
 )
 
-pub fn (mut app App) get_articles() []Article
+pub fn (mut app App) get_articles(author_id int) []Article
 {
-	query := "$query_all_articles;"
-	rows, _ := app.db.exec(query)
+	mut query := query_all_articles
+	if author_id > -1 {
+		query += " ${query_where_articles.replace('[0]', author_id.str())}"
+	}
+
+	rows, _ := app.db.exec("$query;")
 	mut articles := []Article{}
 
 	if rows.len > 0 {
@@ -46,9 +51,9 @@ pub fn (mut app App) get_articles() []Article
 	return articles
 }
 
-pub fn (mut app App) get_top_articles() []Article
+pub fn (mut app App) get_top_articles(author_id int) []Article
 {
-	query := "$query_all_articles $query_sort_articles;"
+	query := "$query_all_articles ${query_where_articles.replace('[0]', author_id.str())} $query_sort_articles;"
 	rows, _ := app.db.exec(query)
 	mut articles := []Article{}
 

@@ -6,6 +6,7 @@ cv
 *.so
 *.dylib
 *.dll
+*.sqlite
 
 # Ignore common editor/system specific metadata
 .DS_Store

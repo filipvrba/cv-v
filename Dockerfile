@@ -5,16 +5,19 @@ RUN apk --no-cache add upx
 
 WORKDIR /app
 COPY . .
-RUN mkdir bin && /opt/vlang/v -prod -o bin/cv app.v
+RUN /opt/vlang/v install markdown && \
+    /opt/vlang/v -prod -o bin/cv app.v
 
 FROM alpine AS runtime
 
 RUN apk update && apk upgrade \
-    && apk add --no-cache openssl
+    && apk add --no-cache openssl sqlite-dev
 
 WORKDIR /app
 COPY --from=builder /app/bin/ .
-COPY --from=builder /app/src .
+
+RUN mkdir src
+COPY --from=builder /app/src ./src
 
 EXPOSE 8080
 CMD [ "./cv" ]

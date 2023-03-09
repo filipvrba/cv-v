@@ -1,7 +1,7 @@
 module src
 
 import vweb
-import db.sqlite
+import sqlite
 import os
 // import time
 

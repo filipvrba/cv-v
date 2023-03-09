@@ -37,11 +37,14 @@ pub fn(mut app App) post_article_add() vweb.Result
 	api_article := json.decode(ApiArticle, app.Context.req.data) or {
 		ApiArticle{}
 	}
-	code_result := app.add_article(api_article)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_article.token == token {
+		code_result := app.add_article(api_article)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -53,11 +56,14 @@ pub fn(mut app App) post_article_free() vweb.Result
 	api_article := json.decode(ApiArticle, app.Context.req.data) or {
 		ApiArticle{}
 	}
-	code_result := app.free_article(api_article)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_article.token == token {
+		code_result := app.free_article(api_article)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -69,11 +75,14 @@ pub fn(mut app App) post_article_update() vweb.Result
 	api_article := json.decode(ApiArticle, app.Context.req.data) or {
 		ApiArticle{}
 	}
-	code_result := app.update_article(api_article)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_article.token == token {
+		code_result := app.update_article(api_article)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -86,11 +95,14 @@ pub fn(mut app App) post_project_add() vweb.Result
 	api_project := json.decode(ApiProject, app.Context.req.data) or {
 		ApiProject{}
 	}
-	code_result := app.set_project(api_project)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_project.token == token {
+		code_result := app.set_project(api_project)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -102,11 +114,14 @@ pub fn(mut app App) post_project_free() vweb.Result
 	api_project := json.decode(ApiProject, app.Context.req.data) or {
 		ApiProject{}
 	}
-	code_result := app.free_project(api_project)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_project.token == token {
+		code_result := app.free_project(api_project)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -118,11 +133,14 @@ pub fn(mut app App) post_project_update() vweb.Result
 	api_project := json.decode(ApiProject, app.Context.req.data) or {
 		ApiProject{}
 	}
-	code_result := app.update_project(api_project)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_project.token == token {
+		code_result := app.update_project(api_project)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -135,11 +153,14 @@ pub fn(mut app App) post_profile_add() vweb.Result
 	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
 		ApiProfileTwo{}
 	}
-	code_result := app.add_profile(api_profile)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_profile.token == token {
+		code_result := app.add_profile(api_profile)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -151,11 +172,14 @@ pub fn(mut app App) post_profile_free() vweb.Result
 	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
 		ApiProfileTwo{}
 	}
-	code_result := app.free_profile(api_profile)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_profile.token == token {
+		code_result := app.free_profile(api_profile)
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -167,11 +191,15 @@ pub fn(mut app App) post_profile_update() vweb.Result
 	api_profile := json.decode(ApiProfileTwo, app.Context.req.data) or {
 		ApiProfileTwo{}
 	}
-	code_result := app.update_profile(api_profile)
 
-	message := Message{
-		status_code: StatusCode{
-			code: code_result
+	mut message := get_forbidden_message()
+	if api_profile.token == token {
+		code_result := app.update_profile(api_profile)
+
+		message = Message{
+			status_code: StatusCode{
+				code: code_result
+			}
 		}
 	}
 	return app.json(message)
@@ -181,6 +209,12 @@ pub fn(mut app App) post_profile_update() vweb.Result
 [post; '/api/v1/post/tables/reset']
 pub fn(mut app App) post_tables_reset() vweb.Result
 {
-	message := app.api_reset_tables()
+	api_table := json.decode(ApiTable, app.Context.req.data) or {
+		ApiTable{}
+	}
+	mut message := get_forbidden_message()
+	if api_table.token == token {
+		message = app.api_reset_tables()
+	}
 	return app.json(message)
 }

@@ -18,4 +18,5 @@ struct ApiProject {
 	category 	string
 	content 	string
 	query		string
+	token       string
 }

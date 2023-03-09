@@ -27,4 +27,5 @@ struct ApiProfileTwo {
 	phone	  string
 	bio		  string
 	query	  string
+	token     string
 }

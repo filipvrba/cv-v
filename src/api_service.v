@@ -11,6 +11,16 @@ pub fn get_greet_message() Message {
 	}
 }
 
+pub fn get_forbidden_message() Message {
+	return Message {
+		status_code: StatusCode {
+			code: 403
+			status: "Forbidden"
+		}
+		message: "The request has been granted but cannot be implemented. Invalid Token!"
+	}
+}
+
 pub fn (mut a App) get_api_articles() ApiArticles {
 	return ApiArticles {
 		status_code: StatusCode {

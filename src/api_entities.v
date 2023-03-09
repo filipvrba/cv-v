@@ -24,3 +24,7 @@ struct ApiProfile {
 	status_code StatusCode
 	profile []Profile
 }
+
+struct ApiTable {
+	token string
+}

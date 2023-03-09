@@ -19,4 +19,5 @@ struct ApiArticle {
 	description string
 	url 		string
 	query		string
+    token       string
 }

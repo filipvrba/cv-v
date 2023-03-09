@@ -2,13 +2,13 @@ module src
 
 import vweb
 import db.sqlite
-// import os
+import os
 // import time
 
 const (
 	port = 8080
 	static_dir = 'src/public'
-    // token = os.environ()[""]
+    token = os.environ()["CV_TOKEN"]
 	web_year = 2023
 )
 

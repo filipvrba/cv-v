@@ -11,7 +11,7 @@ RUN /opt/vlang/v install markdown && \
 FROM alpine AS runtime
 
 RUN apk update && apk upgrade \
-    && apk add --no-cache openssl sqlite-dev
+    && apk add --no-cache openssl sqlite-dev vim
 
 WORKDIR /app
 COPY --from=builder /app/bin/ .

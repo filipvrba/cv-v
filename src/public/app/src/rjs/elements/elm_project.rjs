@@ -5,10 +5,7 @@ export default class ElmProjects < DataElement
     super
 
     @data = @data[0]
-    @md = window.markdownit(
-      breaks: true,
-      html: true
-    )
+    @spinner = document.getElementById('spinner_project')
 
     init_elm()
   end
@@ -20,7 +17,7 @@ export default class ElmProjects < DataElement
     </div>
     <article class='blog-post mx-auto col-lg-9'>
       <div class='md-html' class='pb-4 mb-4'>
-        #{ @md.render( @data[:content] ) }
+        #{ @data[:content] }
       </div>
       <hr>
       <ul class='list-inline'>
@@ -40,6 +37,7 @@ export default class ElmProjects < DataElement
     </article>
     """
 
+    @spinner.remove()
     self.innerHTML = template
   end
 end

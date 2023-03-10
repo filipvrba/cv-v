@@ -4,6 +4,7 @@ export default class ElmProfile extends DataElement {
   constructor() {
     super();
     this._data = this._data[0];
+    this._spinner = document.getElementById("spinner_profile");
     this.init_elm()
   };
 
@@ -43,6 +44,7 @@ export default class ElmProfile extends DataElement {
       </div>
 
     `}`;
+    this._spinner.remove();
     this.innerHTML = template
   }
 }

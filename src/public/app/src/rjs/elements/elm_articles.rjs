@@ -6,6 +6,7 @@ export default class ElmArticles < DataElement
   def initialize
     super
     @l_hash_change = lambda { hash_change( location.hash.replace('#', '') ) }
+    @spinner = document.getElementById('spinner_articles')
 
     init_elm()
   end
@@ -90,6 +91,7 @@ export default class ElmArticles < DataElement
       </div>
     """
 
+    @spinner.remove()
     self.innerHTML = template
   end
 

@@ -3,6 +3,7 @@ import DataElement from "./data_element.js";
 export default class ElmProjects extends DataElement {
   constructor() {
     super();
+    this._spinner = document.getElementById("spinner_projects");
     this.init_elm()
   };
 
@@ -63,6 +64,7 @@ export default class ElmProjects extends DataElement {
       ${l_acc_item.call()}
     </div>
     `}`;
+    this._spinner.remove();
     this.innerHTML = template
   }
 }

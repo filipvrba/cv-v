@@ -4,6 +4,8 @@ export default class ElmProjects < DataElement
   def initialize
     super
 
+    @spinner = document.getElementById('spinner_projects')
+
     init_elm()
   end
 
@@ -64,6 +66,7 @@ export default class ElmProjects < DataElement
     </div>
     """
 
+    @spinner.remove()
     self.innerHTML = template
   end
 end

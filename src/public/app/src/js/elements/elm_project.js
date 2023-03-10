@@ -4,7 +4,7 @@ export default class ElmProjects extends DataElement {
   constructor() {
     super();
     this._data = this._data[0];
-    this._md = window.markdownit({breaks: true, html: true});
+    this._spinner = document.getElementById("spinner_project");
     this.init_elm()
   };
 
@@ -15,7 +15,7 @@ export default class ElmProjects extends DataElement {
     </div>
     <article class='blog-post mx-auto col-lg-9'>
       <div class='md-html' class='pb-4 mb-4'>
-        ${this._md.render(this._data.content)}
+        ${this._data.content}
       </div>
       <hr>
       <ul class='list-inline'>
@@ -34,6 +34,7 @@ export default class ElmProjects extends DataElement {
       </ul>
     </article>
     `}`;
+    this._spinner.remove();
     this.innerHTML = template
   }
 }

@@ -4,6 +4,7 @@ export default class ElmArticles extends DataElement {
   constructor() {
     super();
     this._l_hash_change = () => this.hash_change(location.hash.replace("#", ""));
+    this._spinner = document.getElementById("spinner_articles");
     this.init_elm()
   };
 
@@ -89,6 +90,7 @@ export default class ElmArticles extends DataElement {
         ${l_acc_item.call()}
       </div>
     `}`;
+    this._spinner.remove();
     this.innerHTML = template
   };
 

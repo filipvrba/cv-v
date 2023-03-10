@@ -12,15 +12,24 @@
                         <h1 class="display-4 fw-normal">@title</h1>
                     </div>
 
+                    <div id="spinner_greet">
+                        @include '../layout/spinner.html'
+                    </div>
                     <elm-greet data="@p_data"></elm-greet>
 
                     <div class='text-center pb-3 mb-4 pt-3 mt-4'>
                         <h2>Top Articles</h2>
                     </div>
+                    <div id="spinner_articles">
+                        @include '../layout/spinner.html'
+                    </div>
                     <elm-articles data="@tas_data"></elm-articles>
 
                     <div class='text-center pb-3 mb-4 pt-3 mt-4'>
                         <h2>Top Projects</h2>
+                    </div>
+                    <div id="spinner_projects">
+                        @include '../layout/spinner.html'
                     </div>
                     <elm-projects data="@tps_data"></elm-projects>
                 </div>

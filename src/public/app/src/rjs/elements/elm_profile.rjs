@@ -5,6 +5,7 @@ export default class ElmProfile < DataElement
     super
 
     @data = @data[0]
+    @spinner = document.getElementById('spinner_profile')
 
     init_elm()
   end
@@ -46,6 +47,7 @@ export default class ElmProfile < DataElement
 
     """
 
+    @spinner.remove()
     self.innerHTML = template
   end
 end

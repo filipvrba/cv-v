@@ -5,6 +5,7 @@ export default class ElmGreet < DataElement
     super
 
     @data = @data[0]
+    @spinner = document.getElementById('spinner_greet')
 
     init_elm()
   end
@@ -45,6 +46,7 @@ export default class ElmGreet < DataElement
     </div>
     """
 
+    @spinner.remove()
     self.innerHTML = template
   end
 end

@@ -1,11 +1,14 @@
 import DataElement from "./data_element.js";
+import Element from "../core/element.js";
 
 export default class ElmProjects extends DataElement {
   constructor() {
     super();
     this._data = this._data[0];
     this._spinner = document.getElementById("spinner_project");
-    this.init_elm()
+    this.init_elm();
+    let headers = Element.find_headers();
+    Element.add_ids(headers)
   };
 
   init_elm() {

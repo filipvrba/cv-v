@@ -1,0 +1,19 @@
+export default class Element
+  def self.find_headers()
+    node_list = []
+    node_list << document.querySelectorAll('h1')
+    node_list << document.querySelectorAll('h2')
+    node_list << document.querySelectorAll('h3')
+
+    return node_list
+  end
+
+  def self.add_ids(headers)
+    headers.forEach do |node_list|
+      node_list.forEach do |element|
+        name = element.innerText.url_form().toLowerCase().replace('.', '')
+        element.setAttribute('id', name)
+      end
+    end
+  end
+end

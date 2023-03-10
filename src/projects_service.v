@@ -42,7 +42,7 @@ pub fn (mut app App) get_projects(author_id int) []Project
 		data := row.vals
 
 		mut content := urllib.query_unescape(data[4]) or {""}
-		mut reg, _, _ := regex.regex_base("^.*\n")
+		mut reg, _, _ := regex.regex_base("^.*\n\n")
 		a_reg_result := reg.find_all_str( content )
 
 		if a_reg_result.len > 0 {
@@ -74,7 +74,7 @@ pub fn (mut app App) get_top_projects(author_id int) []Project
 			data := row.vals
 
 			mut content := urllib.query_unescape(data[4]) or {""}
-			mut reg, _, _ := regex.regex_base("^.*\n")
+			mut reg, _, _ := regex.regex_base("^.*\n\n")
 			a_reg_result := reg.find_all_str( content )
 
 			if a_reg_result.len > 0 {

@@ -3,9 +3,13 @@ import "ElmProject", "./elements/elm_project.js"
 import "ElmArticles", "./elements/elm_articles.js"
 import "ElmProfile", "./elements/elm_profile.js"
 import "ElmGreet", "./elements/elm_greet.js"
+import "ElmArticlesAdmin", "./elements/elm_articles_admin.js"
+import "ElmProjectsAdmin", "./elements/elm_projects_admin.js"
 
 window.customElements.define( 'elm-projects', ElmProjects )
 window.customElements.define( 'elm-project', ElmProject )
 window.customElements.define( 'elm-articles', ElmArticles )
 window.customElements.define( 'elm-profile', ElmProfile )
 window.customElements.define( 'elm-greet', ElmGreet )
+window.customElements.define( 'elm-articles-admin', ElmArticlesAdmin )
+window.customElements.define( 'elm-projects-admin', ElmProjectsAdmin )

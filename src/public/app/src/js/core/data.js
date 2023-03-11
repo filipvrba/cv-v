@@ -26,5 +26,18 @@ export default class Data {
         ""
       ).split(" ")
     ))
+  };
+
+  static post(data, endpoint) {
+    let xmr = new XMLHttpRequest;
+    let s_data = JSON.stringify(data);
+    xmr.open("POST", endpoint);
+
+    xmr.setRequestHeader(
+      "Content-Type",
+      "application/json;charset=UTF-8"
+    );
+
+    xmr.send(s_data)
   }
 }

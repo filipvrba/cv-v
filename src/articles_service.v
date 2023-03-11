@@ -8,7 +8,9 @@ const (
 	query_all_articles = "SELECT articles.id, profiles.full_name, projects.name, articles.name, description, url, articles.created_at FROM articles " +
 							"INNER JOIN profiles ON articles.author_id = profiles.id " +
 							"INNER JOIN projects ON articles.project_id = projects.id"
+	query_all_articles_raw = "SELECT * FROM articles"
 	query_where_articles = "WHERE articles.author_id = [0]"
+	query_where_article = "WHERE articles.id = [0]"
 	query_sort_articles = "ORDER BY articles.created_at DESC LIMIT 3"
 	query_add_article = "INSERT INTO articles (author_id, project_id, name, description, url, created_at) " +
 		"VALUES ([0], [1], '[2]', '[3]', '[4]', [5])"
@@ -54,6 +56,37 @@ pub fn (mut app App) get_articles(author_id int) []Article
 	else {
 		eprintln("No results were found when looking for Artiles in the query.")
 		articles << Article{
+			id: -1
+		}
+	}
+
+	return articles
+}
+
+pub fn (mut app App) get_article(id int) []ApiArticle
+{
+	mut query := "$query_all_articles_raw ${query_where_article.replace('[0]', id.str())}"
+
+	rows, _ := app.db.exec("$query;")
+	mut articles := []ApiArticle{}
+
+	if rows.len > 0 {
+		for _, row in rows {
+			data := row.vals
+
+			articles << ApiArticle{
+				id: data[0].int()
+				author_id: data[1].int()
+				project_id: data[2].int()
+				name: data[3]
+				description: data[4]
+				url: data[5]
+			}
+		}
+	}
+	else {
+		eprintln("No results were found when looking for Artiles in the query.")
+		articles << ApiArticle{
 			id: -1
 		}
 	}
@@ -143,4 +176,12 @@ pub fn (mut app App) get_encode_json_articles(articles []Article) string
 	encode_json_articles := base32.encode_string_to_string(s_articles_json)
 
 	return encode_json_articles
+}
+
+pub fn (mut app App) get_encode_json_article(article ApiArticle) string
+{
+	s_article_json := json.encode(article)
+	encode_json_article := base32.encode_string_to_string(s_article_json)
+
+	return encode_json_article
 }

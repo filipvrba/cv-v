@@ -1,0 +1,28 @@
+export default class ElmAlert < HTMLElement
+  ALERT_EVENT = "eahe_show"  
+
+  def initialize
+    super
+
+    @h_show_alert = lambda { |e| init_elm(e.detail.message) }
+  end
+
+  def connectedCallback()
+    document.addEventListener(ALERT_EVENT, @h_show_alert)
+  end
+
+  def disconnectedCallback()
+    document.removeEventListener(ALERT_EVENT, @h_show_alert)
+  end
+
+  def init_elm(message)
+    template = """
+    <div id='alert-message' class='alert alert-info alert-dismissible fade show' role='alert'>
+        #{message}
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+    """
+
+    self.innerHTML = template
+  end
+end

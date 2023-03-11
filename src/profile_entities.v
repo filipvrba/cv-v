@@ -28,4 +28,5 @@ struct ApiProfileTwo {
 	bio		  string
 	query	  string
 	token     string
+	password  string
 }

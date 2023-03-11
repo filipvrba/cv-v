@@ -19,4 +19,13 @@ export default class Data
   def self.hex_to_base64(str_hex)
     return btoa(String.fromCharCode.apply(null, str_hex.replace(/\r|\n/, "").replace(/([\da-fA-F]{2}) ?/, "0x$1 ").replace(/ +$/, "").split(" ")));
   end
+
+  def self.post(data, endpoint)
+    xmr = XMLHttpRequest.new
+    s_data = JSON.stringify(data)
+
+    xmr.open("POST", endpoint)
+    xmr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    xmr.send(s_data)
+  end
 end

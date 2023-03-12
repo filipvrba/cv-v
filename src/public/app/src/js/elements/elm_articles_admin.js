@@ -16,7 +16,12 @@ export default class ElmArticlesAdmin extends DataElement {
     if (this._data.length == 1 && this._data[0].id == -1 || this._data.length == 0) {
       template = `${`
       <div class='text-center'>
-        <p class='h4 text-muted'>no articles found</p>
+        <a class='h4' href='${ElmArticlesAdmin.LINK_ADD}'>
+          <p>
+            <p class='mb-0 fa fa-plus'></p>
+            Add
+          </p>
+        </a>
       </div>
       `}`
     } else {
@@ -57,7 +62,12 @@ export default class ElmArticlesAdmin extends DataElement {
           <table class='table text-center'>
             <thead>
               <tr>
-                <th style='width: 31%; text-align: left;'>Name</th>
+                <th style='width: 31%; text-align: left;'>
+                  <a href='${ElmArticlesAdmin.LINK_ADD}'>
+                    <p class='mb-0 fa fa-plus'></p>
+                    Add
+                  </a>
+                </th>
                 <th style='width: 22%;'>ID</th>
                 <th style='width: 22%;'>Create At</th>
                 <th style='width: 22%;'>Action</th>
@@ -107,4 +117,6 @@ export default class ElmArticlesAdmin extends DataElement {
     this.init_elm();
     this.send_message_alert(`Successful freeing of this '${id}' article.`)
   }
-}
+};
+
+ElmArticlesAdmin.LINK_ADD = "/admin/article/add"

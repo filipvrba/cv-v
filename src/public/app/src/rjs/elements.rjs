@@ -7,6 +7,7 @@ import "ElmArticlesAdmin", "./elements/elm_articles_admin.js"
 import "ElmProjectsAdmin", "./elements/elm_projects_admin.js"
 import "ElmAlert", "./elements/elm_alert.js"
 import "ElmArticleEdit", "./elements/elm_article_edit.js"
+import "ElmArticleAdd", "./elements/elm_article_add.js"
 
 window.customElements.define( 'elm-projects', ElmProjects )
 window.customElements.define( 'elm-project', ElmProject )
@@ -17,3 +18,4 @@ window.customElements.define( 'elm-articles-admin', ElmArticlesAdmin )
 window.customElements.define( 'elm-projects-admin', ElmProjectsAdmin )
 window.customElements.define( 'elm-alert', ElmAlert )
 window.customElements.define( 'elm-article-edit', ElmArticleEdit )
+window.customElements.define( 'elm-article-add', ElmArticleAdd )

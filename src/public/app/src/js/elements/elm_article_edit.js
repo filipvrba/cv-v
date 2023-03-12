@@ -57,6 +57,7 @@ export default class ElmArticleEdit extends DataElement {
     btn_submit.classList.add("disabled");
     Data.post_form(form_edit);
     this.send_message_alert("Within 3 seconds, the content will be changed, and you'll be taken directly to the admin page.");
+    location.hash = "#";
     setTimeout(() => location.replace("/admin"), 3_000)
   }
 }

@@ -7,6 +7,7 @@ import ElmArticlesAdmin from "./elements/elm_articles_admin.js";
 import ElmProjectsAdmin from "./elements/elm_projects_admin.js";
 import ElmAlert from "./elements/elm_alert.js";
 import ElmArticleEdit from "./elements/elm_article_edit.js";
+import ElmArticleAdd from "./elements/elm_article_add.js";
 window.customElements.define("elm-projects", ElmProjects);
 window.customElements.define("elm-project", ElmProject);
 window.customElements.define("elm-articles", ElmArticles);
@@ -15,4 +16,5 @@ window.customElements.define("elm-greet", ElmGreet);
 window.customElements.define("elm-articles-admin", ElmArticlesAdmin);
 window.customElements.define("elm-projects-admin", ElmProjectsAdmin);
 window.customElements.define("elm-alert", ElmAlert);
-window.customElements.define("elm-article-edit", ElmArticleEdit)
+window.customElements.define("elm-article-edit", ElmArticleEdit);
+window.customElements.define("elm-article-add", ElmArticleAdd)

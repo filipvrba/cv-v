@@ -52,3 +52,44 @@ pub fn(mut app App) post_article_edit(id int) vweb.Result
 		return app.redirect_to_admin_login()
 	}
 }
+
+[get; '/admin/article/add']
+pub fn(mut app App) article_add() vweb.Result
+{
+	if app.is_logged_in() {
+		title := "Add | Article"
+
+		return $vweb.html()
+	}
+	else {
+		return app.redirect_to_admin_login()
+	}
+}
+
+[post; '/admin/article/add']
+pub fn(mut app App) post_admin_article_add() vweb.Result
+{
+	if app.is_logged_in() {
+		form := app.Context.form.clone()
+		api_article := ApiArticle{
+			name: form['name']
+			author_id: form['author_id'].int()
+			project_id: form['project_id'].int()
+			url: form['url']
+			description: form['description']
+		}
+
+		println(api_article)
+
+		code_result := app.add_article(api_article)
+		message := Message{
+			status_code: StatusCode{
+				code: code_result
+			}
+		}
+		return app.json(message)
+	}
+	else {
+		return app.redirect_to_admin_login()
+	}
+}

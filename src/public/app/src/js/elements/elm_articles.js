@@ -34,7 +34,7 @@ export default class ElmArticles extends DataElement {
 
       for (let i = 0; i < this._data.length; i++) {
         let article = this._data[i];
-        let article_id = `${i}-${article.name.url_form()}`;
+        let article_id = `${article.id}-${article.name.url_form()}`;
         let template = `${`
 <div id='${article_id}' class='accordion-item'>
   <h2 class='accordion-header' id='heading_${article_id}'>

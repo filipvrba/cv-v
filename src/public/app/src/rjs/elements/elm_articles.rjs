@@ -33,7 +33,7 @@ export default class ElmArticles < DataElement
       end
 
       (0...@data.length).step(1) do |i| article = @data[i]
-        article_id = "#{i}-#{article[:name].url_form()}"
+        article_id = "#{article[:id]}-#{article[:name].url_form()}"
 
         template = """
 <div id='#{article_id}' class='accordion-item'>

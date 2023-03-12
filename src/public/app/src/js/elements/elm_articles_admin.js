@@ -30,12 +30,15 @@ export default class ElmArticlesAdmin extends DataElement {
 
         for (let i = 0; i < this._data.length; i++) {
           let article = this._data[i];
+          let article_id = `${article.id}-${article.name.url_form()}`;
+          let article_link = `${location.origin}/articles/#${article_id}`;
           let s_td = `${`
             <tr id='article-${article.id}'>
-              <th scope='row' class='text-start'>${article.name}</a>
+              <th scope='row' class='text-start'>
+                <a href='${article_link}' target='_blank'>${article.name}</a>
               </th>
               <th scope='row' class='text-center'>${article.id}</th>
-              <th scope='row' class='text-center'>${article.created_at}</th>
+              <th scope='row' class='text-center'>${article.created_at.to_date_with_time()}</th>
               <th scope='row' class='text-center'>
                 <div class='btn-group'>
                   <button type='button' class='btn btn-primary' onclick='click_article_edit(${article.id})'>Edit</button>
@@ -69,7 +72,7 @@ export default class ElmArticlesAdmin extends DataElement {
                   </a>
                 </th>
                 <th style='width: 22%;'>ID</th>
-                <th style='width: 22%;'>Create At</th>
+                <th style='width: 22%;'>Created At</th>
                 <th style='width: 22%;'>Action</th>
               </tr>
             </thead>

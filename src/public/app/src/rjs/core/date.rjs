@@ -8,3 +8,16 @@ def to_date()
   return "#{day}. #{month}. #{year}"
 end
 Number.prototype.to_date = to_date
+
+def to_date_with_time()
+  date = Date.new(self * 1_000)
+  s_iso_date = date.toISOString().replace(/T.*$/, '').split('-')
+  day = s_iso_date[2]
+  month = s_iso_date[1]
+  year = s_iso_date[0]
+
+  time = date.toISOString().replace(/^.*T/, '').replace(/\..*$/, '')
+  
+  return "#{day}. #{month}. #{year} - #{time}"
+end
+Number.prototype.to_date_with_time = to_date_with_time

@@ -32,10 +32,11 @@ export default class ElmProjectsAdmin < DataElement
         (0...@data.length).step(1) do |i| project = @data[i]
           s_td = """
             <tr id='project-#{project.id}'>
-              <th scope='row' class='text-start'>#{project.name}</a>
+              <th scope='row' class='text-start'>
+                <a href='/projects/#{project[:name].url_form()}' target='_blank'>#{project.name}</a>
               </th>
               <th scope='row' class='text-center'>#{project.id}</th>
-              <th scope='row' class='text-center'>#{project.create_at}</th>
+              <th scope='row' class='text-center'>#{project.create_at.to_date_with_time()}</th>
               <th scope='row' class='text-center'>
                 <div class='btn-group'>
                   <button type='button' class='btn btn-primary' onclick='click_project_edit(#{project.id})'>Edit</button>
@@ -68,7 +69,7 @@ export default class ElmProjectsAdmin < DataElement
                   </a>
                 </th>
                 <th style='width: 22%;'>ID</th>
-                <th style='width: 22%;'>Create At</th>
+                <th style='width: 22%;'>Created At</th>
                 <th style='width: 22%;'>Action</th>
               </tr>
             </thead>

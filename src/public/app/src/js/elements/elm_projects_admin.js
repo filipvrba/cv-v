@@ -9,6 +9,7 @@ export default class ElmProjectsAdmin extends DataElement {
 
   init_elm() {
     let template = `${`\n    `}`;
+    console.log(this._data);
     this._spinner.remove();
     this.innerHTML = template
   }

@@ -12,6 +12,8 @@ export default class ElmProjectsAdmin < DataElement
     template = """
     """
 
+    console.log @data
+
     @spinner.remove()
     self.innerHTML = template
   end

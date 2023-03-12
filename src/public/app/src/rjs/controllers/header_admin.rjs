@@ -1,0 +1,29 @@
+export default class HeaderAdmin
+  ARTICLES_TAB = 'articles-tab'
+  PROJECTS_TAB = 'projects-tab'
+  ARTICLES_HASH = "#select-#{ARTICLES_TAB}"
+  PROJECTS_HASH = "#select-#{PROJECTS_TAB}"
+
+  def self.click_articles_tab_pane()
+    location.hash = ARTICLES_HASH
+  end
+
+  def self.click_projects_tab_pane()
+    location.hash = PROJECTS_HASH
+  end
+
+  def self.autoselect_tab_pane()
+    case location.hash
+    when ARTICLES_HASH
+      btn_articles_tab = document.getElementById(ARTICLES_TAB)
+      btn_articles_tab.click()
+    when PROJECTS_HASH
+      btn_projects_tab = document.getElementById(PROJECTS_TAB)
+      btn_projects_tab.click()
+    end
+  end
+end
+
+window.click_articles_tab_pane = HeaderAdmin.click_articles_tab_pane
+window.click_projects_tab_pane = HeaderAdmin.click_projects_tab_pane
+HeaderAdmin.autoselect_tab_pane()

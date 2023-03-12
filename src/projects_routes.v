@@ -54,7 +54,7 @@ pub fn(mut app App) post_project_edit(id int) vweb.Result
 		api_project := ApiProject{
 			id: id
 			query: "author_id=${form['author_id']}, name=\'${form['name']}\', " +
-				"category=\'${form['category']}\', content=\'${urllib.query_escape( form['content'] )}\'"
+				"category=\'${form['category']}\', content=\'${urllib.query_escape( form['content'].replace('\r\n', '\n') )}\'"
 		}
 
 		code_result := app.update_project(api_project)
@@ -92,7 +92,7 @@ pub fn(mut app App) post_admin_project_add() vweb.Result
 			author_id: form["author_id"].int()
 			name: form["name"]
 			category: form["category"]
-			content: urllib.query_escape( form["content"] )
+			content: urllib.query_escape( form["content"].replace('\r\n', '\n') )
 		}
 
 		code_result := app.set_project(api_project)

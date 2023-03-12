@@ -13,7 +13,7 @@ const (
 	query_where_article = "WHERE articles.id = [0]"
 	query_sort_articles = "ORDER BY articles.created_at DESC LIMIT 3"
 	query_add_article = "INSERT INTO articles (author_id, project_id, name, description, url, created_at) " +
-		"VALUES ([0], [1], '[2]', '[3]', '[4]', [5])"
+		"VALUES ([0], [1], '[2]', \"[3]\", '[4]', [5])"
 	query_free_article = "DELETE FROM articles WHERE id = [0]"
 	query_update_article = "UPDATE articles SET [0] WHERE id = [1]"
 	query_create_articles = "CREATE TABLE articles (" +

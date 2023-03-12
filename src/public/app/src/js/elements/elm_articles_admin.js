@@ -1,6 +1,5 @@
 import DataElement from "./data_element.js";
 import Data from "../core/data.js";
-import ElmAlert from "./elm_alert.js";
 
 export default class ElmArticlesAdmin extends DataElement {
   constructor() {
@@ -107,10 +106,5 @@ export default class ElmArticlesAdmin extends DataElement {
 
     this.init_elm();
     this.send_message_alert(`Successful freeing of this '${id}' article.`)
-  };
-
-  send_message_alert(message) {
-    let show_alert = new CustomEvent(ElmAlert.ALERT_EVENT, {detail: {message}});
-    document.dispatchEvent(show_alert)
   }
 }

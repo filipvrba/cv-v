@@ -39,5 +39,12 @@ export default class Data {
     );
 
     xmr.send(s_data)
+  };
+
+  static post_form(form) {
+    let xmr = new XMLHttpRequest;
+    let fd = new FormData(form);
+    xmr.open("POST", form.action);
+    xmr.send(fd)
   }
 }

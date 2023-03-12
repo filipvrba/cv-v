@@ -1,17 +1,67 @@
 import 'DataElement', './data_element.js'
+import 'Data', '../core/data.js'
 
 export default class ElmArticleEdit < DataElement
   def initialize
     super
+    @spinner = document.getElementById('spinner_article')
 
     init_elm()
+
+    window.click_article_edit_post = click_article_edit_post
   end
 
   def init_elm()
     template = """
+    <div class='row g-3'>
+      <form id='form-edit' class='row g-3' action='/admin/article/edit/#{@data.id}' method='post'>
+        <div class='col-md-4'>
+          <label for='name' class='form-label'>Name</label>
+          <input name='name' type='text' class='form-control' id='name' value='#{@data.name}'>
+        </div>
+        <div class='col-md-4'>
+          <label for='author_id' class='form-label'>Author ID</label>
+          <input name='author_id' type='number' class='form-control' id='author_id' value='#{@data.author_id}' min='1'>
+        </div>
+        <div class='col-md-4'>
+          <label for='project_id' class='form-label'>Project ID</label>
+          <input name='project_id' type='number' class='form-control' id='project_id' value='#{@data.project_id}' min='1'>
+        </div>
+
+        <div class='col-md-2'></div>
+        <div class='col-md-8'>
+          <label for='url' class='form-label'>URL</label>
+          <input name='url' type='text' class='form-control' id='url' value='#{@data.url}'>
+        </div>
+        <div class='col-md-2'></div>
+
+        <div class='col-md-2'></div>
+        <div class='col-md-8 mb-3'>
+          <label for='description' class='form-label'>Description</label>
+          <textarea name='description' class='form-control' id='description' style='height: 120px'>#{@data.description}</textarea>
+        </div>
+        <div class='col-md-2'></div>
+      </form>
+      <div class='col-md-3'></div>
+        <div class='col-md-6 d-grid gap-2'>
+          <button id='btn-submit'class='btn btn-primary' onclick='click_article_edit_post()'>Modify the article, then leave.</button>
+        </div>
+      <div class='col-md-3'></div>
+    </div>
     """
 
-    console.log @data
+    @spinner.remove()
     self.innerHTML = template
+  end
+
+  def click_article_edit_post()
+    form_edit = document.getElementById('form-edit')
+    btn_submit = document.getElementById('btn-submit')
+    btn_submit.classList.add('disabled')
+
+    Data.post_form(form_edit)
+    self.send_message_alert("Within 3 seconds, the content will be " +
+      "changed, and you'll be taken directly to the admin page.")
+    setTimeout(lambda { location.replace('/admin') }, 3000)
   end
 end

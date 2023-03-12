@@ -4,6 +4,7 @@ import crypto.rand
 import json
 import encoding.base32
 import time
+import vweb
 
 fn generate_token(length int) string {
     mut admin_token := ""
@@ -35,4 +36,12 @@ pub fn (mut app App) get_cookie_logged_in() string {
 
 pub fn (mut app App)is_logged_in() bool {
 	return app.get_cookie_logged_in() == 1.str()
+}
+
+pub fn (mut app App)redirect_to_admin() vweb.Result {
+	return app.redirect('/admin')
+}
+
+pub fn (mut app App)redirect_to_admin_login() vweb.Result {
+	return app.redirect('/admin/login')
 }

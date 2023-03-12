@@ -28,4 +28,12 @@ export default class Data
     xmr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     xmr.send(s_data)
   end
+
+  def self.post_form(form)
+    xmr = XMLHttpRequest.new
+    fd = new FormData(form)
+
+    xmr.open("POST", form.action)
+    xmr.send(fd)
+  end
 end

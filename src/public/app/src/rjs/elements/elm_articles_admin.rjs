@@ -1,6 +1,5 @@
 import 'DataElement', './data_element.js'
 import 'Data', '../core/data.js'
-import 'ElmAlert', './elm_alert.js'
 
 export default class ElmArticlesAdmin < DataElement
   def initialize
@@ -104,15 +103,6 @@ export default class ElmArticlesAdmin < DataElement
     end
 
     init_elm()
-    send_message_alert("Successful freeing of this '#{id}' article.")
-  end
-
-  def send_message_alert(message)
-    show_alert = CustomEvent.new(ElmAlert::ALERT_EVENT, {
-      detail: {
-        message: message,
-      }
-    })
-    document.dispatchEvent(show_alert)
+    self.send_message_alert("Successful freeing of this '#{id}' article.")
   end
 end

@@ -23,7 +23,7 @@ pub fn(mut app App) admin_index() vweb.Result
 
 		return $vweb.html()
 	} else {
-		return app.redirect('/admin/login')
+		return app.redirect_to_admin_login()
 	}
 }
 
@@ -31,7 +31,7 @@ pub fn(mut app App) admin_index() vweb.Result
 pub fn(mut app App) admin_login() vweb.Result
 {
 	if app.is_logged_in() {
-		return app.redirect('/admin')
+		return app.redirect_to_admin()
 	} else {
 		title := "Login | Admin"
 		author_id := app.get_profiles(true)[0].id
@@ -51,26 +51,10 @@ pub fn(mut app App) admin_logging_in() vweb.Result
 
 	if password_form == password_db {
 		app.set_cookie_logged_in(1)
-		return app.redirect('/admin')
+		return app.redirect_to_admin()
 	}
 	else {
-		return app.redirect('/admin/login')
-	}
-}
-
-[get; '/admin/article/edit/:id']
-pub fn(mut app App) admin_articleedit(id int) vweb.Result
-{
-	if app.is_logged_in() {
-		article := app.get_article(id)[0]
-
-		title := article.name
-		data := app.get_encode_json_article(article)
-
-		return $vweb.html()
-	}
-	else {
-		return app.redirect('/admin/login')
+		return app.redirect_to_admin_login()
 	}
 }
 
@@ -83,9 +67,9 @@ pub fn(mut app App) admin_article_free() vweb.Result
 		}
 
 		app.free_article(api_article)
-		return app.redirect('/admin')
+		return app.redirect_to_admin()
 	}
 	else {
-		return app.redirect('/admin/login')
+		return app.redirect_to_admin_login()
 	}
 }

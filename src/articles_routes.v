@@ -79,8 +79,6 @@ pub fn(mut app App) post_admin_article_add() vweb.Result
 			description: form['description']
 		}
 
-		println(api_article)
-
 		code_result := app.add_article(api_article)
 		message := Message{
 			status_code: StatusCode{

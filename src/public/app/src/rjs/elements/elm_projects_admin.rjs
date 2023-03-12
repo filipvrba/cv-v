@@ -1,20 +1,119 @@
 import 'DataElement', './data_element.js'
+import 'Data', '../core/data.js'
 
 export default class ElmProjectsAdmin < DataElement
+  LINK_ADD = "/admin/project/add"
+
   def initialize
     super
     @spinner = document.getElementById('spinner_projects')
 
     init_elm()
+
+    window.click_project_edit = click_project_edit
+    window.click_project_free = click_project_free
   end
 
   def init_elm()
-    template = """
-    """
+    if @data.length == 1 and @data[0].id == -1 or @data.length == 0
+      template = """
+      <div class='text-center'>
+        <a class='h4' href='#{LINK_ADD}'>
+          <p>
+            <p class='mb-0 fa fa-plus'></p>
+            Add
+          </p>
+        </a>
+      </div>
+      """
+    else
+      l_tbody = lambda do
+        result = ""
+        (0...@data.length).step(1) do |i| project = @data[i]
+          s_td = """
+            <tr id='project-#{project.id}'>
+              <th scope='row' class='text-start'>#{project.name}</a>
+              </th>
+              <th scope='row' class='text-center'>#{project.id}</th>
+              <th scope='row' class='text-center'>#{project.create_at}</th>
+              <th scope='row' class='text-center'>
+                <div class='btn-group'>
+                  <button type='button' class='btn btn-primary' onclick='click_project_edit(#{project.id})'>Edit</button>
+                  <button type='button' class='btn btn-primary dropdown-toggle dropdown-toggle-split' data-bs-toggle='dropdown' aria-expanded='false'>
+                    <span class='visually-hidden'>Toggle Dropdown</span>
+                  </button>
+                  <ul class='dropdown-menu' style=''>
+                    <li>
+                      <button type='button' class='dropdown-item' onclick='click_project_free(#{project.id})'>Free</button>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+            </tr>
+          """
+          result += "#{s_td}\n"
+        end
+        return result
+      end
 
-    console.log @data
+      template = """
+        <div class='table-responsive'>
+          <table class='table text-center'>
+            <thead>
+              <tr>
+                <th style='width: 31%; text-align: left;'>
+                  <a href='#{LINK_ADD}'>
+                    <p class='mb-0 fa fa-plus'></p>
+                    Add
+                  </a>
+                </th>
+                <th style='width: 22%;'>ID</th>
+                <th style='width: 22%;'>Create At</th>
+                <th style='width: 22%;'>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              #{l_tbody.call()}
+            </tbody>
+          </table>
+        </div>
+      """
+    end
 
     @spinner.remove()
     self.innerHTML = template
+  end
+
+  def click_project_edit(id)
+    location.replace("/admin/project/edit/#{id}")
+  end
+
+  def click_project_free(id)
+    is_ok = window.confirm("Would you really like to remove this '#{id}' project?")
+    if is_ok
+      data = {
+        id: id
+      }
+      Data.post(data, "admin/project/free")
+      remove_project(id)
+    end
+  end
+
+  def remove_project(id)
+    elm_project = document.getElementById("project-#{id}")
+    elm_project.remove()
+
+    data = @data
+    (0..data.length).step(1) do |i|
+      project = data[i]
+      if project.id == id
+        @data.splice(id, data.length - 1)
+        @data.pop()
+        break
+      end
+    end
+
+    init_elm()
+    self.send_message_alert("Successful freeing of this '#{id}' project.")
   end
 end

@@ -9,6 +9,8 @@ import net.urllib
 
 const (
 	query_all_projects = "SELECT projects.id, full_name as author, name, category, content, projects.created_at, last_change FROM projects INNER JOIN profiles ON projects.author_id = profiles.id"
+	query_all_projects_raw = "SELECT * FROM projects"
+	query_where_project_id = "WHERE id = [0]"
 	query_where_project = "WHERE REPLACE(LOWER(name), ' - ', ' ') = '[*]'"
 	query_where_author_project = "WHERE projects.author_id = [0]"
 	query_sort_projects = "ORDER BY last_change DESC LIMIT 3"
@@ -100,6 +102,35 @@ pub fn (mut app App) get_top_projects(author_id int) []Project
 	return projects
 }
 
+pub fn (mut app App) get_api_projects_raw() []RawProject
+{
+	query := query_all_projects_raw
+	rows, _ := app.db.exec("$query;")
+	mut projects := []RawProject{}
+
+	if rows.len > 0 {
+		for _, row in rows {
+			data := row.vals
+			content := urllib.query_unescape( data[4] ) or {""}
+
+			projects << RawProject{
+				id: data[0].int()
+				author_id: data[1].int()
+				name: data[2]
+				category: data[3]
+				content: content
+				created_at: data[5].int()
+				last_change: data[6].int()
+			}
+		}
+	}
+	else {
+		eprintln("No results were found when looking for an RawProjects in the query.")
+	}
+
+	return projects
+}
+
 pub fn (mut app App) get_project(name string) ![]Project
 {
 	query := "$query_all_projects ${query_where_project.replace_once('[*]', name)};"
@@ -126,6 +157,35 @@ pub fn (mut app App) get_project(name string) ![]Project
 	else {
 		return error("Name $name not found.")
 	}
+}
+
+pub fn (mut app App) get_project_raw(id int) []ApiProject
+{
+	query := "$query_all_projects_raw ${query_where_project_id.replace_once('[0]', id.str())};"
+	rows, _ := app.db.exec(query)
+	mut projects := []ApiProject{}
+
+	if rows.len > 0 {
+		for _, row in rows {
+			data := row.vals
+
+			projects << ApiProject{
+				id: data[0].int()
+				author_id: data[1].int()
+				name: data[2]
+				category: data[3]
+				content: urllib.query_unescape(data[4]) or {""}
+			}
+		}
+	}
+	else {
+		eprintln("Name $id not found.")
+		projects << ApiProject{ 
+			id: -1
+		} 
+	}
+
+	return projects
 }
 
 pub fn (mut app App) set_project(api_project ApiProject) int
@@ -178,4 +238,12 @@ pub fn (mut app App) get_encode_json_projects(projects []Project) string
 	encode_json_projects := base32.encode_string_to_string(s_projects_json)
 
 	return encode_json_projects
+}
+
+pub fn (mut app App) get_encode_json_project(project ApiProject) string
+{
+	s_project_json := json.encode(project)
+	encode_json_project := base32.encode_string_to_string(s_project_json)
+
+	return encode_json_project
 }

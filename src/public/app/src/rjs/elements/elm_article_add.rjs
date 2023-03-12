@@ -1,5 +1,6 @@
 import 'DataElement', './data_element.js'
 import 'Data', '../core/data.js'
+import 'HeaderAdmin', '../controllers/header_admin.js'
 
 export default class ElmArticleAdd < DataElement
   def initialize
@@ -56,7 +57,7 @@ export default class ElmArticleAdd < DataElement
 
   def click_article_add_post()
     input_name = document.getElementById('input-name')
-    redirect_admin = lambda { location.replace('/admin') }
+    redirect_admin = lambda { location.replace("/admin#{HeaderAdmin::ARTICLES_HASH}") }
 
     unless input_name.value == ""
       form_edit = document.getElementById('form-edit')

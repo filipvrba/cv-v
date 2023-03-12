@@ -1,0 +1,79 @@
+import 'DataElement', './data_element.js'
+import 'Data', '../core/data.js'
+import 'HeaderAdmin', '../controllers/header_admin.js'
+
+export default class ElmProjectAdd < DataElement
+  def initialize
+    super
+    @spinner = document.getElementById('spinner_project')
+
+    init_elm()
+    @simplemde = SimpleMDE.new({
+        toolbar: false,
+        tabSize: 4,
+        autofocus: false,
+        autosave: {
+            enabled: false,
+        },
+        spellChecker: false,
+        status: false,
+    })
+
+    window.click_project_add_post = click_project_add_post
+  end
+
+  def init_elm()
+    template = """
+    <div class='row g-3'>
+      <form id='form-edit' class='row g-3' action='/admin/project/add' method='post'>
+        <div class='col-md-4'>
+          <label for='name' class='form-label'>Name</label>
+          <input id='input-name' name='name' type='text' class='form-control' id='name'>
+        </div>
+        <div class='col-md-4'>
+          <label for='author_id' class='form-label'>Author ID</label>
+          <input name='author_id' type='number' class='form-control' id='author_id' value='1' min='1'>
+        </div>
+        <div class='col-md-4'>
+          <label for='category' class='form-label'>Category</label>
+          <input name='category' type='text' class='form-control' id='category'>
+        </div>
+
+        <div class='col-md-0 mb-3'>
+          <label for='content' class='form-label'>Content</label>
+          <textarea name='content' class='form-control' id='content'></textarea>
+        </div>
+      </form>
+      <div class='col-md-3'></div>
+        <div class='col-md-6 d-grid gap-2'>
+          <button id='btn-submit'class='btn btn-primary' onclick='click_project_add_post()'>Add or Leave</button>
+        </div>
+      <div class='col-md-3'></div>
+    </div>
+    """
+
+    @spinner.remove()
+    self.innerHTML = template
+  end
+
+  def click_project_add_post()
+    input_name = document.getElementById('input-name')
+    redirect_admin = lambda { location.replace("/admin#{HeaderAdmin::PROJECTS_HASH}") }
+
+    unless input_name.value == ""
+      textarea = document.querySelector('textarea')
+      textarea.value = @simplemde.value()
+      form_edit = document.getElementById('form-edit')
+      btn_submit = document.getElementById('btn-submit')
+      btn_submit.classList.add('disabled')
+
+      Data.post_form(form_edit)
+      self.send_message_alert("Within 3 seconds, the content will be " +
+        "changed, and you'll be taken directly to the admin page.")
+      location.hash = '#'
+      setTimeout(redirect_admin, 3000)
+    else
+      redirect_admin.call()
+    end
+  end
+end

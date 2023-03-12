@@ -1,5 +1,6 @@
 import DataElement from "./data_element.js";
 import Data from "../core/data.js";
+import HeaderAdmin from "../controllers/header_admin.js";
 
 export default class ElmArticleAdd extends DataElement {
   constructor() {
@@ -53,7 +54,10 @@ export default class ElmArticleAdd extends DataElement {
 
   click_article_add_post() {
     let input_name = document.getElementById("input-name");
-    let redirect_admin = () => location.replace("/admin");
+
+    let redirect_admin = () => (
+      location.replace(`/admin${HeaderAdmin.ARTICLES_HASH}`)
+    );
 
     if (input_name.value == "") {
       redirect_admin.call()

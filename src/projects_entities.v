@@ -20,3 +20,13 @@ struct ApiProject {
 	query		string
 	token       string
 }
+
+struct RawProject {
+	id			int
+	author_id 	int
+	name 		string
+	category 	string
+	content 	string
+	created_at  int
+	last_change int
+}

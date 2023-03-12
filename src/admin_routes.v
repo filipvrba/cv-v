@@ -73,3 +73,19 @@ pub fn(mut app App) admin_article_free() vweb.Result
 		return app.redirect_to_admin_login()
 	}
 }
+
+[post; '/admin/project/free']
+pub fn(mut app App) admin_project_free() vweb.Result
+{
+	if app.is_logged_in() {
+		api_project := json.decode(ApiProject, app.Context.req.data) or {
+			ApiProject{}
+		}
+
+		app.free_project(api_project)
+		return app.redirect_to_admin()
+	}
+	else {
+		return app.redirect_to_admin_login()
+	}
+}

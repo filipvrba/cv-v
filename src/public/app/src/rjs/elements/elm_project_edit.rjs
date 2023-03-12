@@ -2,20 +2,30 @@ import 'DataElement', './data_element.js'
 import 'Data', '../core/data.js'
 import 'HeaderAdmin', '../controllers/header_admin.js'
 
-export default class ElmArticleEdit < DataElement
+export default class ElmProjectEdit < DataElement
   def initialize
     super
-    @spinner = document.getElementById('spinner_article')
+    @spinner = document.getElementById('spinner_project')
 
     init_elm()
+    @simplemde = SimpleMDE.new({
+        toolbar: false,
+        tabSize: 4,
+        autofocus: false,
+        autosave: {
+            enabled: false,
+        },
+        spellChecker: false,
+        status: false,
+    })
 
-    window.click_article_edit_post = click_article_edit_post
+    window.click_project_edit_post = click_project_edit_post
   end
 
   def init_elm()
     template = """
     <div class='row g-3'>
-      <form id='form-edit' class='row g-3' action='/admin/article/edit/#{@data.id}' method='post'>
+      <form id='form-edit' class='row g-3' action='/admin/project/edit/#{@data.id}' method='post'>
         <div class='col-md-4'>
           <label for='name' class='form-label'>Name</label>
           <input name='name' type='text' class='form-control' id='name' value='#{@data.name}'>
@@ -25,27 +35,18 @@ export default class ElmArticleEdit < DataElement
           <input name='author_id' type='number' class='form-control' id='author_id' value='#{@data.author_id}' min='1'>
         </div>
         <div class='col-md-4'>
-          <label for='project_id' class='form-label'>Project ID</label>
-          <input name='project_id' type='number' class='form-control' id='project_id' value='#{@data.project_id}' min='1'>
+          <label for='category' class='form-label'>Category</label>
+          <input name='category' type='text' class='form-control' id='category' value='#{@data.category}'>
         </div>
 
-        <div class='col-md-2'></div>
-        <div class='col-md-8'>
-          <label for='url' class='form-label'>URL</label>
-          <input name='url' type='text' class='form-control' id='url' value='#{@data.url}'>
+        <div class='col-md-0 mb-3'>
+          <label for='content' class='form-label'>Content</label>
+          <textarea name='content' class='form-control' id='content' style='height: 120px'>#{@data.content}</textarea>
         </div>
-        <div class='col-md-2'></div>
-
-        <div class='col-md-2'></div>
-        <div class='col-md-8 mb-3'>
-          <label for='description' class='form-label'>Description</label>
-          <textarea name='description' class='form-control' id='description' style='height: 120px'>#{@data.description}</textarea>
-        </div>
-        <div class='col-md-2'></div>
       </form>
       <div class='col-md-3'></div>
         <div class='col-md-6 d-grid gap-2'>
-          <button id='btn-submit'class='btn btn-primary' onclick='click_article_edit_post()'>Modify the article, then leave.</button>
+          <button id='btn-submit'class='btn btn-primary' onclick='click_project_edit_post()'>Modify the project, then leave.</button>
         </div>
       <div class='col-md-3'></div>
     </div>
@@ -55,7 +56,9 @@ export default class ElmArticleEdit < DataElement
     self.innerHTML = template
   end
 
-  def click_article_edit_post()
+  def click_project_edit_post()
+    textarea = document.querySelector('textarea')
+    textarea.value = @simplemde.value()
     form_edit = document.getElementById('form-edit')
     btn_submit = document.getElementById('btn-submit')
     btn_submit.classList.add('disabled')
@@ -64,6 +67,6 @@ export default class ElmArticleEdit < DataElement
     self.send_message_alert("Within 3 seconds, the content will be " +
       "changed, and you'll be taken directly to the admin page.")
     location.hash = '#'
-    setTimeout(lambda { location.replace("/admin#{HeaderAdmin::ARTICLES_HASH}") }, 3000)
+    setTimeout(lambda { location.replace("/admin#{HeaderAdmin::PROJECTS_HASH}") }, 3000)
   end
 end

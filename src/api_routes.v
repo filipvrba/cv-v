@@ -12,14 +12,14 @@ pub fn(mut app App) api_index() vweb.Result
 [get; '/api/v1/get/articles']
 pub fn(mut app App) api_get_articles() vweb.Result
 {
-	articles := app.get_api_articles()
+	articles := app.get_api_articles_raw()
 	return app.json(articles)
 }
 
 [get; '/api/v1/get/projects']
 pub fn(mut app App) api_get_projects() vweb.Result
 {
-	projects := app.get_api_projects()
+	projects := app.get_api_projects_raw()
 	return app.json(projects)
 }
 

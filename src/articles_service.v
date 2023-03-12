@@ -63,6 +63,34 @@ pub fn (mut app App) get_articles(author_id int) []Article
 	return articles
 }
 
+pub fn (mut app App) get_api_articles_raw() []RawArticle
+{
+	query := query_all_articles_raw
+	rows, _ := app.db.exec("$query;")
+	mut articles := []RawArticle{}
+
+	if rows.len > 0 {
+		for _, row in rows {
+			data := row.vals
+
+			articles << RawArticle{
+				id: data[0].int()
+				author_id: data[1].int()
+				project_id: data[2].int()
+				name: data[3]
+				description: data[4]
+				url: data[5]
+				created_at: data[6].int()
+			}
+		}
+	}
+	else {
+		eprintln("No results were found when looking for an RawArtiles in the query.")
+	}
+
+	return articles
+}
+
 pub fn (mut app App) get_article(id int) []ApiArticle
 {
 	mut query := "$query_all_articles_raw ${query_where_article.replace('[0]', id.str())}"

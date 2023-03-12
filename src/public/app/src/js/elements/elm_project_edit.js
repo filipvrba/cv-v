@@ -2,18 +2,28 @@ import DataElement from "./data_element.js";
 import Data from "../core/data.js";
 import HeaderAdmin from "../controllers/header_admin.js";
 
-export default class ElmArticleEdit extends DataElement {
+export default class ElmProjectEdit extends DataElement {
   constructor() {
     super();
-    this._spinner = document.getElementById("spinner_article");
+    this._spinner = document.getElementById("spinner_project");
     this.init_elm();
-    window.click_article_edit_post = this.click_article_edit_post.bind(this)
+
+    this._simplemde = new SimpleMDE({
+      toolbar: false,
+      tabSize: 4,
+      autofocus: false,
+      autosave: {enabled: false},
+      spellChecker: false,
+      status: false
+    });
+
+    window.click_project_edit_post = this.click_project_edit_post.bind(this)
   };
 
   init_elm() {
     let template = `${`
     <div class='row g-3'>
-      <form id='form-edit' class='row g-3' action='/admin/article/edit/${this._data.id}' method='post'>
+      <form id='form-edit' class='row g-3' action='/admin/project/edit/${this._data.id}' method='post'>
         <div class='col-md-4'>
           <label for='name' class='form-label'>Name</label>
           <input name='name' type='text' class='form-control' id='name' value='${this._data.name}'>
@@ -23,27 +33,18 @@ export default class ElmArticleEdit extends DataElement {
           <input name='author_id' type='number' class='form-control' id='author_id' value='${this._data.author_id}' min='1'>
         </div>
         <div class='col-md-4'>
-          <label for='project_id' class='form-label'>Project ID</label>
-          <input name='project_id' type='number' class='form-control' id='project_id' value='${this._data.project_id}' min='1'>
+          <label for='category' class='form-label'>Category</label>
+          <input name='category' type='text' class='form-control' id='category' value='${this._data.category}'>
         </div>
 
-        <div class='col-md-2'></div>
-        <div class='col-md-8'>
-          <label for='url' class='form-label'>URL</label>
-          <input name='url' type='text' class='form-control' id='url' value='${this._data.url}'>
+        <div class='col-md-0 mb-3'>
+          <label for='content' class='form-label'>Content</label>
+          <textarea name='content' class='form-control' id='content' style='height: 120px'>${this._data.content}</textarea>
         </div>
-        <div class='col-md-2'></div>
-
-        <div class='col-md-2'></div>
-        <div class='col-md-8 mb-3'>
-          <label for='description' class='form-label'>Description</label>
-          <textarea name='description' class='form-control' id='description' style='height: 120px'>${this._data.description}</textarea>
-        </div>
-        <div class='col-md-2'></div>
       </form>
       <div class='col-md-3'></div>
         <div class='col-md-6 d-grid gap-2'>
-          <button id='btn-submit'class='btn btn-primary' onclick='click_article_edit_post()'>Modify the article, then leave.</button>
+          <button id='btn-submit'class='btn btn-primary' onclick='click_project_edit_post()'>Modify the project, then leave.</button>
         </div>
       <div class='col-md-3'></div>
     </div>
@@ -52,7 +53,9 @@ export default class ElmArticleEdit extends DataElement {
     this.innerHTML = template
   };
 
-  click_article_edit_post() {
+  click_project_edit_post() {
+    let textarea = document.querySelector("textarea");
+    textarea.value = this._simplemde.value();
     let form_edit = document.getElementById("form-edit");
     let btn_submit = document.getElementById("btn-submit");
     btn_submit.classList.add("disabled");
@@ -61,7 +64,7 @@ export default class ElmArticleEdit extends DataElement {
     location.hash = "#";
 
     setTimeout(
-      () => location.replace(`/admin${HeaderAdmin.ARTICLES_HASH}`),
+      () => location.replace(`/admin${HeaderAdmin.PROJECTS_HASH}`),
       3_000
     )
   }

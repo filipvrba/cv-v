@@ -103,18 +103,7 @@ export default class ElmProjectsAdmin extends DataElement {
   remove_project(id) {
     let elm_project = document.getElementById(`project-${id}`);
     elm_project.remove();
-    let data = this._data;
-
-    for (let i = 0; i <= data.length; i++) {
-      let project = data[i];
-
-      if (project.id == id) {
-        this._data.splice(id, data.length - 1);
-        this._data.pop();
-        break
-      }
-    };
-
+    this._data = this._data.remove_value_from_id(id);
     this.init_elm();
     this.send_message_alert(`Successful freeing of this '${id}' project.`)
   }

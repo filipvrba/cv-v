@@ -1,0 +1,20 @@
+def remove_value_from_id(id)
+  arr_clone = Array.from(self)
+  result = nil
+
+  (0..arr_clone.length).step(1) do |i|
+    if self[i].id == id
+      unless i == 0
+        _start = self.splice(0, i)
+        _end = self.splice(i, arr_clone.length)
+        result = _start.concat(_end)
+        break
+      else
+        result = self.splice(i + 1, arr_clone.length)
+        break
+      end
+    end
+  end
+  return result
+end
+Array.prototype.remove_value_from_id = remove_value_from_id

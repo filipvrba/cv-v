@@ -105,18 +105,7 @@ export default class ElmArticlesAdmin extends DataElement {
   remove_article(id) {
     let elm_article = document.getElementById(`article-${id}`);
     elm_article.remove();
-    let data = this._data;
-
-    for (let i = 0; i <= data.length; i++) {
-      let article = data[i];
-
-      if (article.id == id) {
-        this._data.splice(id, data.length - 1);
-        this._data.pop();
-        break
-      }
-    };
-
+    this._data = this._data.remove_value_from_id(id);
     this.init_elm();
     this.send_message_alert(`Successful freeing of this '${id}' article.`)
   }

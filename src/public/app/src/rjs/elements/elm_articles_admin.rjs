@@ -106,16 +106,7 @@ export default class ElmArticlesAdmin < DataElement
   def remove_article(id)
     elm_article = document.getElementById("article-#{id}")
     elm_article.remove()
-
-    data = @data
-    (0..data.length).step(1) do |i|
-      article = data[i]
-      if article.id == id
-        @data.splice(id, data.length - 1)
-        @data.pop()
-        break
-      end
-    end
+    @data = @data.remove_value_from_id(id)
 
     init_elm()
     self.send_message_alert("Successful freeing of this '#{id}' article.")

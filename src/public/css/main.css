@@ -3,6 +3,7 @@ body {
     font-size: 18px;
 }
 
+.md-html iframe,
 .md-html img {
     display: block;
 
